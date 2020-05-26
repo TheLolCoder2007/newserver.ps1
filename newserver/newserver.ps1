@@ -4,11 +4,7 @@ install-Module -Name posh-SSH -Scope CurrentUser
 }
 function make-folder {
 cd $env:TMP
-try {
 mkdir -Path . -Name newserver
-}catch {
-$oops = Get-ChildItem
-}
 }
 function server-properties_questions {
 $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
