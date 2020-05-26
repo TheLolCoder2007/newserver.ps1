@@ -188,6 +188,19 @@ break
 function eula-txt {
 Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
+function start-sh_questions {
+$question = Read-Host -Prompt "do you have an start.sh?(y/n)"
+if ($question -eq "y") {
+start-sh
+}elseif ($question -eq "n") {
+Write-Host -Object "start.sh is skipped"
+}else{
+Write-Host -Object "not answered y/n. script will now stop"
+}
+}
+function start-sh {
+Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\
+}
 function sftp-1+ssh-1 {
 function comd {
 param ([int]$ID, [string]$comd)
@@ -208,8 +221,6 @@ comd 0 "mkdir $global:serverPRT"
 Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
 Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
 Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
-Copy-Item -Path $env:TEMP\newserver\start_def.sh -Destination $env:TEMP\newserver\start.sh -Force
-
 }
 function download_questions {
 $downld = Read-Host -Prompt "do you need to download your server.jar?(y/n)"
@@ -259,6 +270,7 @@ modules
 make-folder
 server-properties_questions
 eula-txt_questions
+start-sh_questions
 sftp-1+ssh-1
 download_questions
 sftp-2
@@ -266,4 +278,4 @@ clean-up
 }
 call
 #todo list:
-#2 start.sh
+#1 start.sh
