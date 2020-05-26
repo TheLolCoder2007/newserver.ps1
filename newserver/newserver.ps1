@@ -199,7 +199,9 @@ Write-Host -Object "not answered y/n. script will now stop"
 }
 }
 function start-sh {
-Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\
+Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value '#!bin/sh'
+Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'BINDIR="$(dirname "$(readlink -fn "$0")")"'
+Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$bindir"'
 }
 function sftp-1+ssh-1 {
 function comd {
