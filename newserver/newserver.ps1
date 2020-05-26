@@ -234,16 +234,11 @@ comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O 
 Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
 
 }elseif ($jarfile -eq "forge") {
-$ver = Read-Host -Prompt "version"
-if ($ver -eq "1.12.2") {
-comd 0 "wget -q https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-universal.jar -O ./$global:serverPRT/forge-1.12.2-14.23.5.2846-universal.jar"
-Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar forge-1.12.2-14.23.5.2847-universal.jar"
-
-}else{
-comd 0 "wget -q https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.15.2-31.1.46/forge-1.15.2-31.1.46-universal.jar -O ./$global:serverPRT/forge-1.15.2-31.1.46-universal.jar"
-Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar forge-1.15.2-31.1.46-universal.jar"
-
-}
+$pass = Read-Host "what is your password for $computername?"
+comd -ID 0 -comd "apt-get install unzip"
+comd -ID 0 -comd $computername
+comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
+comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
 }else{
 Write-Host -Object "not valid value entered, program will now quit."
 break
