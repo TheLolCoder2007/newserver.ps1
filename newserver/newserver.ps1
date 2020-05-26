@@ -266,4 +266,4 @@ clean-up
 }
 call
 #todo list:
-#1 
+#2 start.sh
