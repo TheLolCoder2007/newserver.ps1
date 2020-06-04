@@ -220,9 +220,9 @@ Write-Host -Object "your server port already exist. Program will now quit."
 break
 }
 comd 0 "mkdir $global:serverPRT"
-Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
-Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
-Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
+$1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
+$1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
+$1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
 function download_questions {
 $downld = Read-Host -Prompt "do you need to download your server.jar?(y/n)"
@@ -258,7 +258,7 @@ break
 }
 }
 function sftp-2 {
-Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
+$1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
 }
 function clean-up {
 Remove-SFTPSession -SessionId 0
