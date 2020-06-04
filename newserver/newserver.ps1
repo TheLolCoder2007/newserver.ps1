@@ -252,6 +252,7 @@ comd -ID 0 -comd "apt-get install unzip"
 comd -ID 0 -comd $computername
 comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
 comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
+comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
 }else{
 Write-Host -Object "not valid value entered, program will now quit."
 break
