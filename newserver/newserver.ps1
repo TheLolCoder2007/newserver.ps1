@@ -190,9 +190,9 @@ Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
 function start-sh_questions {
 $question = Read-Host -Prompt "do you have an start.sh?(y/n)"
-if ($question -eq "y") {
+if ($question -eq "n") {
 start-sh
-}elseif ($question -eq "n") {
+}elseif ($question -eq "y") {
 Write-Host -Object "start.sh is skipped"
 }else{
 Write-Host -Object "not answered y/n. script will now stop"
