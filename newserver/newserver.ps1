@@ -1,10 +1,10 @@
 ﻿Write-Host -Object "loading functions & modules, wait a moment..."
 function modules {
-$1 = install-Module -Name posh-SSH -Scope CurrentUser
+    $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
 function make-folder {
-cd $env:TMP
-$1 = mkdir -Path . -Name newserver
+    cd $env:TMP
+    $1 = mkdir -Path . -Name newserver
 }
 function server-properties_questions {
 $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
