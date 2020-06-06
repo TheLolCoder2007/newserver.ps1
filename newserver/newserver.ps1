@@ -12,14 +12,16 @@ function make-folder {
 }
 
 function server-properties_questions {
+    #ask for server.properties: simple(server-properties_simple) or advanced(server-properties_advanced)
     $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
     if ($srvProp -eq "simple") {
+        #if answered simple: run server-properties_simple
         server-properties_simple
-    }
-    elseif ($srvProp -eq "advanced") {
+    }elseif ($srvProp -eq "advanced") {
+        #if answered advanced: run server-properties_advanced
         server-properties_advanced
-    }
-    elseif ($srvProp -eq "none") {
+    }elseif ($srvProp -eq "none") {
+        #if anwered none: ask for server port and skip.
         $serverPRT = Read-Host -Prompt "wat is je server port?"
         Write-Host -Object "server.properties is geskipt"
     }
