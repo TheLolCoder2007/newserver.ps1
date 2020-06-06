@@ -1,11 +1,14 @@
 ﻿Write-Host -Object "loading functions & modules, wait a moment..."
+
 function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
+
 function make-folder {
     cd $env:TMP
     $1 = mkdir -Path . -Name newserver
 }
+
 function server-properties_questions {
     $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
     if ($srvProp -eq "simple") {
@@ -19,6 +22,7 @@ function server-properties_questions {
         Write-Host -Object "server.properties is geskipt"
     }
 }
+
 function server-properties_advanced {
     function ask{
         param ([string]$vraag, [string]$defVal, [string]$propVal)
@@ -95,6 +99,7 @@ function server-properties_advanced {
     Add-Content $env:TEMP\newserver\server.properties "motd=$motd"
     ask "enable rcon(def=false)" $false "enable-rcon"
 }
+
 function server-properties_simple {
     function RET {
         param ([string]$nu, [string]$def)
@@ -172,6 +177,7 @@ function server-properties_simple {
     add -toWrite "motd=A minecraft server"
     add -toWrite "enable-rcon=true"
 }
+
 function eula-txt_questions {
     $eulaAsk = Read-Host -Prompt "do you already have an eula.txt?(y/n)"
     if ($eulaAsk -eq "y") {
@@ -183,9 +189,11 @@ function eula-txt_questions {
     break
     }
 }
+
 function eula-txt {
     Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
+
 function start-sh_questions {
     $question = Read-Host -Prompt "do you have an start.sh?(y/n)"
     if ($question -eq "n") {
@@ -196,11 +204,13 @@ function start-sh_questions {
         Write-Host -Object "not answered y/n. script will now stop"
     }
 }
+
 function start-sh {
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value '#!bin/sh'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'BINDIR="$(dirname "$(readlink -fn "$0")")"'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$bindir"'
 }
+
 function sftp-1+ssh-1 {
     function comd {
         param ([int]$ID, [string]$comd)
@@ -221,6 +231,7 @@ function sftp-1+ssh-1 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
     $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
+
 function download_questions {
     $downld = Read-Host -Prompt "do you need to download your server.jar?(y/n)"
     if ($downld -eq "y") {
@@ -231,6 +242,7 @@ function download_questions {
         Write-Host -Object "not answered y/n. Program will now stop"
     }
 }
+
 function download {
     function comd {
         param ([int]$ID, [string]$comd)
@@ -253,9 +265,11 @@ function download {
         break
     }
 }
+
 function sftp-2 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
 }
+
 function clean-up {
     $1 = Remove-SFTPSession -SessionId 0
     $1 = Remove-SFTPSession -SessionId 1 
@@ -263,6 +277,7 @@ function clean-up {
     $1 = Remove-SSHSession -SessionId 0
     $1 = rmdir -Path $env:TEMP\newserver
 }
+
 function call {
     modules
     make-folder
@@ -274,6 +289,7 @@ function call {
     sftp-2
     clean-up
 }
+
 call
 #todo list:
 #1 repair forge server
