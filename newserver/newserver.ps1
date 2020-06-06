@@ -236,7 +236,7 @@ function comd {
 param ([int]$ID, [string]$comd)
 $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
 }
-$jarfile = Read-Host -Prompt "spigot, bukkit or forge"
+$jarfile = Read-Host -Prompt "spigot or bukkit (there is basically no difference)"
 if ($jarfile -eq "spigot") {
 $1 = comd 0 "wget -q https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./$global:serverPRT/spigot-1.15.2.jar"
 Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
