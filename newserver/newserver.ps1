@@ -1,6 +1,7 @@
 ﻿Write-Host -Object "loading functions & modules, wait a moment..."
 
 function modules {
+    # Load module posh-SSH
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
 
