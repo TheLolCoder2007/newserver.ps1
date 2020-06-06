@@ -1,6 +1,6 @@
 # powershell repository
 ## owned by [@TheLolCoder2007](https://github.com/thelolcoder2007)
-## collaberators: [@RobbertEr](https://github.com/robberter), @thelol-DAG \(account is deleted\)
+## collaberators: [@RobbertEr](https://github.com/robberter), @thelol-DAG \(account is deleted\), [@martensjrm](github.com/martensjrm)
 ## please check out my other repos [here](https://github.com/thelolcoder2007?tab=repositories)
 ## if you want to use my scripts, you don't need something repo-wide.
 ## but you need to read the \*\_readme.md included with for example newserver.ps1.
