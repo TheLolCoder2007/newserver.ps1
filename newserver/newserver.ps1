@@ -278,4 +278,4 @@ clean-up
 }
 call
 #todo list:
-#1 start.sh
+#1 repair forge server
