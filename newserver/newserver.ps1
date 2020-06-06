@@ -6,6 +6,7 @@ function modules {
 }
 
 function make-folder {
+    # make folder newserver in %tmp%
     cd $env:TMP
     $1 = mkdir -Path . -Name newserver
 }
