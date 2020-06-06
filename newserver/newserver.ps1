@@ -1,10 +1,10 @@
 ﻿Write-Host -Object "loading functions & modules, wait a moment..."
 function modules {
-install-Module -Name posh-SSH -Scope CurrentUser
+$1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
 function make-folder {
 cd $env:TMP
-mkdir -Path . -Name newserver
+$1 = mkdir -Path . -Name newserver
 }
 function server-properties_questions {
 $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
@@ -206,20 +206,19 @@ Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$b
 function sftp-1+ssh-1 {
 function comd {
 param ([int]$ID, [string]$comd)
-Invoke-SSHCommand -SessionId $ID -Command $comd 
+$1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
 }
 $computername =  Read-Host "what is your computer name/ip adress? This need to be an linux host."
 $usernameTOcomp = Read-Host "what is your username for ${computername}?"
-Write-Host "log in to ${computername}:"
-New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp 
-New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
-comd 0 "cd ~"
+$1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp 
+$1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
+$1 = comd 0 "cd ~"
 $lsoutput = comd 0 "ls"
 if (!$lsoutput.Output -ccontains $global:serverPRT) {
 Write-Host -Object "your server port already exist. Program will now quit."
 break
 }
-comd 0 "mkdir $global:serverPRT"
+$1 = comd 0 "mkdir $global:serverPRT"
 $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
 $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
 $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
@@ -235,24 +234,22 @@ Write-Host -Object "server.jar download skipped"
 function download {
 function comd {
 param ([int]$ID, [string]$comd)
-Invoke-SSHCommand -SessionId $ID -Command $comd 
+$1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
 }
 $jarfile = Read-Host -Prompt "spigot, bukkit or forge"
 if ($jarfile -eq "spigot") {
-comd 0 "wget -q https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./$global:serverPRT/spigot-1.15.2.jar"
+$1 = comd 0 "wget -q https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./$global:serverPRT/spigot-1.15.2.jar"
 Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
 
 }elseif ($jarfile -eq "bukkit") {
-comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
+$1 = comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
 Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
 
 }elseif ($jarfile -eq "forge") {
-$pass = Read-Host "what is your password for $computername?"
-comd -ID 0 -comd "apt-get install unzip"
-comd -ID 0 -comd $pass
-comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
-comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
-comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
+$1 = comd -ID 0 -comd "apt-get install unzip"
+$1 = comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
+$1 = comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
+$1 = comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
 }else{
 Write-Host -Object "not valid value entered, program will now quit."
 break
@@ -262,11 +259,11 @@ function sftp-2 {
 $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
 }
 function clean-up {
-Remove-SFTPSession -SessionId 0
-Remove-SFTPSession -SessionId 1 
-Remove-Item -Path $env:TEMP\newserver\*.*
-Remove-SSHSession -SessionId 0
-rmdir -Path $env:TEMP\newserver
+$1 = Remove-SFTPSession -SessionId 0
+$1 = Remove-SFTPSession -SessionId 1 
+$1 = Remove-Item -Path $env:TEMP\newserver\*.*
+$1 = Remove-SSHSession -SessionId 0
+$1 = rmdir -Path $env:TEMP\newserver
 }
 function call {
 modules
