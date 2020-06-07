@@ -28,6 +28,7 @@ function server-properties_questions {
 }
 
 function server-properties_advanced {
+    #make function ask: ask the question, RET it, and write it to server.properties
     function ask{
         param ([string]$vraag, [string]$defVal, [string]$propVal)
         $returnval = Read-Host -Prompt $vraag
