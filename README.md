@@ -9,4 +9,5 @@
   * an folder in \~ \(home dir\) who doesn't exist.
   * with package \"unzip\" \(installed with \"sudo apt install unzip\"\)
 * powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
+## This project needs translations, when I am ready with [en.lang.ps1](/newserver/en.lang.ps1) please help me with translating this whole project. Thanks!
 ## I hope you will enjoy this project!
