@@ -1,10 +1,53 @@
-﻿Write-Host -Object "loading functions & modules, wait a moment..."
+﻿#initialize language packs
+function DownloadFilesFromRepo {
+Param(
+    [string]$Owner,
+    [string]$Repository,
+    [string]$Path,
+    [string]$DestinationPath
+    )
+
+    $baseUri = "https://api.github.com/"
+    $args = "repos/$Owner/$Repository/contents/$Path"
+    $wr = Invoke-WebRequest -Uri $($baseuri+$args)
+    $objects = $wr.Content | ConvertFrom-Json
+    $files = $objects | where {$_.type -eq "file"} | Select -exp download_url
+    $directories = $objects | where {$_.type -eq "dir"}
+    
+    $directories | ForEach-Object { 
+        DownloadFilesFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
+    }
+
+    
+    if (-not (Test-Path $DestinationPath)) {
+        # Destination path does not exist, let's create it
+        try {
+            New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop
+        } catch {
+            throw "Could not create path '$DestinationPath'!"
+        }
+    }
+
+    foreach ($file in $files) {
+        $fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
+        try {
+            Invoke-WebRequest -Uri $file -OutFile $fileDestination -ErrorAction Stop -Verbose
+            "Grabbed '$($file)' to '$fileDestination'"
+        } catch {
+            throw "Unable to download '$($file.path)'"
+        }
+    }
+
+}
+$lang = Read-Host -Prompt "en/nl"
+if ($lang -eq "en") {
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
+    . $scriptlocation
+}
+Write-Host -Object $loading
 function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
-}
-function make-folder {
-    cd $env:TMP
-    $1 = mkdir -Path . -Name newserver
 }
 function server-properties_questions {
     $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
