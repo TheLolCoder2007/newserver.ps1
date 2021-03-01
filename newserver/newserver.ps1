@@ -50,7 +50,7 @@ function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
 function server-properties_questions {
-    $srvProp = Read-Host -Prompt "server.properties:simple or advanced?"
+    $srvProp = Read-Host -Prompt "server.properties:simple or advanced?" # this is not translated, because of the complexibility. I want to work on this in the future.
     if ($srvProp -eq "simple") {
         server-properties_simple
     }
@@ -58,8 +58,8 @@ function server-properties_questions {
         server-properties_advanced
     }
     elseif ($srvProp -eq "none") {
-        $serverPRT = Read-Host -Prompt "wat is je server port?"
-        Write-Host -Object "server.properties is geskipt"
+        $global:serverPRT = Read-Host -Prompt $serverPRTquestion
+        Write-Host -Object $serverPRTskip
     }
 }
 function server-properties_advanced {
@@ -79,7 +79,7 @@ function server-properties_advanced {
     }
     ask "spawnprotection(def=16)" 16 "spawn-protection"
     ask "max tick time(def=60000)" 60000 "max-tick-time"
-    $qport = Read-Host "query port (def=25565)(gelijk aan server port)"
+    $qport = Read-Host "query port (def=25565)($sameAsServerPRT)"
     $qport = RET $qport 25565
     Add-Content $env:TEMP\newserver\server.properties "query.port=$qport"
     Add-Content $env:TEMP\newserver\server.properties "generator-settings="
