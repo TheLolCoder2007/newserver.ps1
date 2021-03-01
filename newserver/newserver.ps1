@@ -237,6 +237,7 @@ function start-sh_questions {
         Write-Host -Object "start.sh is skipped"
     }else{
         Write-Host -Object "not answered y/n. script will now stop"
+        break
     }
 }
 function start-sh {
@@ -261,7 +262,7 @@ function sftp-1+ssh-1 {
     }
     $1 = comd 0 "mkdir $global:serverPRT"
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
-    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRt -LocalFile $env:TEMP\newserver\server.properties -Overwrite
+    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
     $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
 function download_questions {
@@ -287,9 +288,13 @@ function download {
         $1 = comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
     }elseif ($jarfile -eq "forge") {
-        $1 = comd -ID 0 -comd "apt-get install unzip"
         $1 = comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
-        $1 = comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
+        try {
+            $1 = comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
+        }catch{
+            Write-Host -Object "Unzip was not installed! install it with 'sudo apt install unzip' on your linux machine."
+            Write-Host -Object "Program will now quit"
+            break
         $1 = comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
     }else{
         Write-Host -Object "not valid value entered, program will now quit."
@@ -308,7 +313,6 @@ function clean-up {
 }
 function call {
     modules
-    make-folder
     server-properties_questions
     eula-txt_questions
     start-sh_questions
@@ -319,5 +323,5 @@ function call {
 }
 call
 #todo list:
-#1 repair forge server
+#1 make language packs
 #2 comments!
