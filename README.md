@@ -10,4 +10,7 @@ Requirements:
   * With package \"unzip\" \(installed with \"sudo apt install unzip\"\)
 2. Powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
 ## This project needs translations, when I am ready with [en.lang.ps1](/newserver/en.lang.ps1) please help me with translating this whole project. Thanks!
+### Languages:
+1. English
+2. Yours?
 ## I hope you will enjoy this project!
