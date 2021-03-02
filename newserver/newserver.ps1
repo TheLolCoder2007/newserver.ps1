@@ -77,6 +77,7 @@ function server-properties_advanced {
             return $nu
         }
     }
+    Write-Host -Object $fillIn
     ask "spawnprotection(def=16)" 16 "spawn-protection"
     ask "max tick time(def=60000)" 60000 "max-tick-time"
     $qport = Read-Host "query port (def=25565)($sameAsServerPRT)"
@@ -153,17 +154,17 @@ function server-properties_simple {
     }
     add -toWrite "spawn-protection=16"
     add -toWrite "max-tick-time=60000"
-    $qport = read-host -Prompt "what is your query port? (it will be the same as the server port)"
+    $qport = read-host -Prompt $qportquestion
     $qport = RET $qport 25565
     add -toWrite $qport
     add -toWrite "generator-settings="
     add -toWrite "force-gamemode=false"
     add -toWrite "allow-nether=true"
     add -toWrite "enforce-whitelist=false"
-    $gamemode = Read-Host "gamemode (choice of: 0-3)"
+    $gamemode = Read-Host $gamemodequestion
     $gmtest = 0, 1, 2, 3
     if (!$gmtest -ccontains $gamemode) {
-    Write-Host -Object "you didn't entered an number in range from 0-3"
+    Write-Host -Object $gamemodefault
     break
     }elseif ($gamemode -eq 0) {
         $gamemode = "survival"
@@ -204,7 +205,7 @@ function server-properties_simple {
     add -toWrite "resource-pack="
     add -toWrite "spawn-animals=true"
     add -toWrite "white-list=false"
-    $rconPass = Read-Host -Prompt "type your secret Remote Control password here"
+    $rconPass = Read-Host -Prompt $rconpassquestion
     add -toWrite "rcon.password=$rconPass"
     add -toWrite "generate-structures=true"
     add -toWrite "online-mode=true"
@@ -216,27 +217,27 @@ function server-properties_simple {
     add -toWrite "enable-rcon=true"
 }
 function eula-txt_questions {
-    $eulaAsk = Read-Host -Prompt "do you already have an eula.txt?(y/n)"
+    $eulaAsk = Read-Host -Prompt $eula_txtquestion
     if ($eulaAsk -eq "y") {
-        Write-Host -Object "skipping eula.txt"
+        Write-Host -Object $eulatxtskip
     }elseif ($eulaAsk -eq "n") {
         eula-txt
     }else{
-        Write-Host "not answered y/n. script will now stop."
     break
+        Write-Host $eula_txtfault
     }
 }
 function eula-txt {
     Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
 function start-sh_questions {
-    $question = Read-Host -Prompt "do you have an start.sh?(y/n)"
+    $question = Read-Host -Prompt $start_shquestion
     if ($question -eq "n") {
         start-sh
     }elseif ($question -eq "y") {
-        Write-Host -Object "start.sh is skipped"
+        Write-Host -Object $start_shskip
     }else{
-        Write-Host -Object "not answered y/n. script will now stop"
+        Write-Host -Object $start_shfault
         break
     }
 }
@@ -250,14 +251,15 @@ function sftp-1+ssh-1 {
         param ([int]$ID, [string]$comd)
         $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
     }
-    $computername =  Read-Host "what is your computer name/ip adress? This need to be an linux host."
-    $usernameTOcomp = Read-Host "what is your username for ${computername}?"
+    $computername =  Read-Host $compnamequestion
+    $usernameTOcomp = Read-Host $usernamequestion
+    Write-Host -Object $passwordtwice
     $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp 
     $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
     $1 = comd 0 "cd ~"
     $lsoutput = comd 0 "ls"
     if (!$lsoutput.Output -ccontains $global:serverPRT) {
-        Write-Host -Object "your server port already exist. Program will now quit."
+        Write-Host -Object $serverprtexists
         break
     }
     $1 = comd 0 "mkdir $global:serverPRT"
@@ -266,13 +268,13 @@ function sftp-1+ssh-1 {
     $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
 function download_questions {
-    $downld = Read-Host -Prompt "do you need to download your server.jar?(y/n)"
+    $downld = Read-Host -Prompt $downloadquestion
     if ($downld -eq "y") {
         download
     }elseif ($downld -eq "n") {
-        Write-Host -Object "server.jar download skipped"
+        Write-Host -Object $serverjarskipped
     }else{
-        Write-Host -Object "not answered y/n. Program will now stop"
+        Write-Host -Object $serverjarfault
     }
 }
 function download {
@@ -280,7 +282,7 @@ function download {
         param ([int]$ID, [string]$comd)
         $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
     }
-    $jarfile = Read-Host -Prompt "spigot or bukkit (there is basically no difference)"
+    $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
         $1 = comd 0 "wget -q https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./$global:serverPRT/spigot-1.15.2.jar"
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
