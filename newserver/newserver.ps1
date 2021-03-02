@@ -109,7 +109,7 @@ function server-properties_advanced {
     Add-Content $env:TEMP\newserver\server.properties "rcon.port"
     $global:serverPRT = $qport
     try {
-        $test1 = $qport / 20
+        $1 = $qport / 20
     }
     catch {
         Write-Host -Object "that was not a number"
@@ -132,7 +132,7 @@ function server-properties_advanced {
     ask "online mode(def=true)" $true "online-mode"
     ask "maxBuildHeight(def=256)" 256 "max-build-height"
     $seed = Read-Host -Prompt "world seed"
-    Add-Content $env:TEMP\newserver\server.properties "level-seed"
+    Add-Content $env:TEMP\newserver\server.properties "level-seed=$seed"
     ask "prevent proxy connection(def=false)" $false "prevent-proxy-connections"
     ask "use native transport(def=true)" $true "use-native-transport"
     $Motd = read-host -prompt "what is your MOTD"
@@ -223,8 +223,8 @@ function eula-txt_questions {
     }elseif ($eulaAsk -eq "n") {
         eula-txt
     }else{
-    break
         Write-Host $eula_txtfault
+        break
     }
 }
 function eula-txt {
@@ -294,9 +294,9 @@ function download {
         try {
             $1 = comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
         }catch{
-            Write-Host -Object "Unzip was not installed! install it with 'sudo apt install unzip' on your linux machine."
-            Write-Host -Object "Program will now quit"
+            Write-Host -Object "Unzip was not installed! install it with 'sudo apt install unzip' on your linux machine. The program will now quit"
             break
+        }
         $1 = comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
     }else{
         Write-Host -Object "not valid value entered, program will now quit."
@@ -308,10 +308,8 @@ function sftp-2 {
 }
 function clean-up {
     $1 = Remove-SFTPSession -SessionId 0
-    $1 = Remove-SFTPSession -SessionId 1 
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
     $1 = Remove-SSHSession -SessionId 0
-    $1 = rmdir -Path $env:TEMP\newserver
 }
 function call {
     modules
@@ -325,5 +323,25 @@ function call {
 }
 call
 #todo list:
-#1 make language packs
-#2 comments!
+
+
+#requirements for out of beta:
+#1 have an working language system
+#2 commented every function
+<# MOSCOW list:
+
+MUST
+1. Make language packs
+2. Update jarfiles (they are outdated)
+
+
+SHOULD
+1. Make comments!
+
+COULD
+1. 
+
+WOULD
+1. Make chosing center for versions of the server
+
+#>
