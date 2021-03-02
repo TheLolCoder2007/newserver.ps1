@@ -364,24 +364,22 @@ function call {
 #run the whole script
 call
 
+<#requirements for out of beta:
+1 have an working language system with english and dutch
 
-#requirements for out of beta:
-#1 have an working language system
-#2 commented every function
-<# MOSCOW list:
+MOSCOW list:
 
 MUST
-1. Make language packs
-2. Update jarfiles (they are outdated)
+Make language packs
 
 
 SHOULD
-1. Make comments!
+Update jarfiles (they are outdated)
 
 COULD
-1. 
+
 
 WOULD
-1. Make chosing center for versions of the server
+Make chosing center for versions of the server
 
 #>
