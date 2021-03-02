@@ -1,13 +1,13 @@
-# powershell repository
-## owned by [@TheLolCoder2007](https://github.com/thelolcoder2007)
-## collaberators: [@RobbertEr](https://github.com/robberter), @thelol-DAG \(account is deleted\), [@martensjrm](github.com/martensjrm)
-## please check out my other repos [here](https://github.com/thelolcoder2007)
-## this repo is all about creating an minecraft server
-## requirements:
-## * linux server with:
-##   * SFTP and SSH open
-##   * an folder in \~ \(home dir\) who doesn't exist.
-##   * with package \"unzip\" \(installed with \"sudo apt install unzip\"\)
-## * powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
+# Powershell repository
+## Owned by [@TheLolCoder2007](https://github.com/thelolcoder2007)
+## Collaberators: [@RobbertEr](https://github.com/robberter), @thelol-DAG \(account is deleted\), [@martensjrm](github.com/martensjrm)
+## Please check out my other repos [here](https://github.com/thelolcoder2007)
+## This repo is all about creating an minecraft server
+## Requirements:
+## Linux server with:
+##    SFTP and SSH open
+##    An folder in \~ \(home dir\) who doesn't exist.
+##    With package \"unzip\" \(installed with \"sudo apt install unzip\"\)
+## Powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
 ## This project needs translations, when I am ready with [en.lang.ps1](/newserver/en.lang.ps1) please help me with translating this whole project. Thanks!
 ## I hope you will enjoy this project!
