@@ -4,11 +4,11 @@
 ## Please check out my other repos [here](https://github.com/thelolcoder2007)
 ## This repo is all about creating an minecraft server
 Requirements:
-1. Linux server with:
+* Linux server with:
   * SFTP and SSH open
   * An folder in \~ \(home dir\) who doesn't exist.
   * With package \"unzip\" \(installed with \"sudo apt install unzip\"\)
-2. Powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
+* Powershell 7, included with windows 10 or download it [here](https://github.com/PowerShell/PowerShell/blob/master/README.md)
 ## This project needs translations, when I am ready with [en.lang.ps1](/newserver/en.lang.ps1) please help me with translating this whole project. Thanks!
 ### Languages:
 1. English
