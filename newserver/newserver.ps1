@@ -1,4 +1,3 @@
-﻿#initialize language packs
 ﻿<#
 Script made by thelolcoder2007
 v1.0 came out on 2-3-2021
@@ -52,6 +51,10 @@ if ($lang -eq "en") {
     downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
+}elseif ($lang -eq "nl") {
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/nl.lang.ps1 -DestinationPath $env:temp\newserver
+}else{
+    Write-Host -Object "not a valid value"
 }
 Write-Host -Object $loading
 #load all modules
@@ -61,7 +64,7 @@ function modules {
 
 #ask which server.properties function you want to call
 function server-properties_questions {
-    $srvProp = Read-Host -Prompt "server.properties:simple or advanced?" # this is not translated, because of the complexibility. I want to work on this in the future.
+    $srvProp = Read-Host -Prompt $serverpropertiesquestion 
     if ($srvProp -eq "simple") {
         server-properties_simple
     }
@@ -71,7 +74,9 @@ function server-properties_questions {
     elseif ($srvProp -eq "none") {
         $global:serverPRT = Read-Host -Prompt $serverPRTquestion
         Write-Host -Object $serverPRTskip
-    }
+    }else{
+    Write-Host -Object $serverprtfault
+}
 }
 
 #make an server.properties file, for people who know what an server.properties is and how that works.
@@ -290,7 +295,6 @@ function sftp-1+ssh-1 {
     $1 = comd 0 "mkdir $global:serverPRT"
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
-    $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
 
 #ask if you want to download server.jar files
@@ -328,7 +332,7 @@ function download {
         }
         $1 = comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
     }else{
-        Write-Host -Object "not valid value entered, program will now quit."
+        Write-Host -Object $notvalidvalue
         break
     }
 }
