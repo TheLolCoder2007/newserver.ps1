@@ -1,4 +1,11 @@
 ﻿#initialize language packs
+﻿<#
+Script made by thelolcoder2007
+v1.0 came out on 2-3-2021
+current version: BETA1.1
+LICENSE: MIT LICENSE.
+FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
+#>
 function DownloadFilesFromRepo {
 Param(
     [string]$Owner,
