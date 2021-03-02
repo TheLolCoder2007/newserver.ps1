@@ -1,16 +1,60 @@
-﻿Write-Host -Object "loading functions & modules, wait a moment..."
+﻿#initialize language packs
+function DownloadFilesFromRepo {
+Param(
+    [string]$Owner,
+    [string]$Repository,
+    [string]$Path,
+    [string]$DestinationPath
+    )
 
+    $baseUri = "https://api.github.com/"
+    $args = "repos/$Owner/$Repository/contents/$Path"
+    $wr = Invoke-WebRequest -Uri $($baseuri+$args)
+    $objects = $wr.Content | ConvertFrom-Json
+    $files = $objects | where {$_.type -eq "file"} | Select -exp download_url
+    $directories = $objects | where {$_.type -eq "dir"}
+    
+    $directories | ForEach-Object { 
+        DownloadFilesFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
+    }
+
+    
+    if (-not (Test-Path $DestinationPath)) {
+        # Destination path does not exist, let's create it
+        try {
+            New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop
+        } catch {
+            throw "Could not create path '$DestinationPath'!"
+        }
+    }
+
+    foreach ($file in $files) {
+        $fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
+        try {
+            Invoke-WebRequest -Uri $file -OutFile $fileDestination -ErrorAction Stop -Verbose
+            "Grabbed '$($file)' to '$fileDestination'"
+        } catch {
+            throw "Unable to download '$($file.path)'"
+        }
+    }
+
+}
+$lang = Read-Host -Prompt "en/nl"
+if ($lang -eq "en") {
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
+    . $scriptlocation
+}
+Write-Host -Object $loading
 function modules {
-    # Load module posh-SSH
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
 function server-properties_questions {
     $srvProp = Read-Host -Prompt "server.properties:simple or advanced?" # this is not translated, because of the complexibility. I want to work on this in the future.
     if ($srvProp -eq "simple") {
-        #if answered simple: run server-properties_simple
         server-properties_simple
-    }elseif ($srvProp -eq "advanced") {
-        #if answered advanced: run server-properties_advanced
+    }
+    elseif ($srvProp -eq "advanced") {
         server-properties_advanced
     }
     elseif ($srvProp -eq "none") {
@@ -18,9 +62,7 @@ function server-properties_questions {
         Write-Host -Object $serverPRTskip
     }
 }
-
 function server-properties_advanced {
-    #make function ask: ask the question, RET it, and write it to server.properties
     function ask{
         param ([string]$vraag, [string]$defVal, [string]$propVal)
         $returnval = Read-Host -Prompt $vraag
@@ -97,7 +139,6 @@ function server-properties_advanced {
     Add-Content $env:TEMP\newserver\server.properties "motd=$motd"
     ask "enable rcon(def=false)" $false "enable-rcon"
 }
-
 function server-properties_simple {
     function RET {
         param ([string]$nu, [string]$def)
@@ -175,7 +216,6 @@ function server-properties_simple {
     add -toWrite "motd=A minecraft server"
     add -toWrite "enable-rcon=true"
 }
-
 function eula-txt_questions {
     $eulaAsk = Read-Host -Prompt $eula_txtquestion
     if ($eulaAsk -eq "y") {
@@ -187,11 +227,9 @@ function eula-txt_questions {
         break
     }
 }
-
 function eula-txt {
     Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
-
 function start-sh_questions {
     $question = Read-Host -Prompt $start_shquestion
     if ($question -eq "n") {
@@ -203,22 +241,20 @@ function start-sh_questions {
         break
     }
 }
-
 function start-sh {
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value '#!bin/sh'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'BINDIR="$(dirname "$(readlink -fn "$0")")"'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$bindir"'
 }
-
 function sftp-1+ssh-1 {
     function comd {
         param ([int]$ID, [string]$comd)
-        $1 = Invoke-SSHCommand -SessionId $ID -Command $comd
+        $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
     }
     $computername =  Read-Host $compnamequestion
     $usernameTOcomp = Read-Host $usernamequestion
     Write-Host -Object $passwordtwice
-    $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
+    $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp 
     $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
     $1 = comd 0 "cd ~"
     $lsoutput = comd 0 "ls"
@@ -231,7 +267,6 @@ function sftp-1+ssh-1 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
     $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
-
 function download_questions {
     $downld = Read-Host -Prompt $downloadquestion
     if ($downld -eq "y") {
@@ -242,7 +277,6 @@ function download_questions {
         Write-Host -Object $serverjarfault
     }
 }
-
 function download {
     function comd {
         param ([int]$ID, [string]$comd)
@@ -269,17 +303,14 @@ function download {
         break
     }
 }
-
 function sftp-2 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
 }
-
 function clean-up {
     $1 = Remove-SFTPSession -SessionId 0
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
     $1 = Remove-SSHSession -SessionId 0
 }
-
 function call {
     modules
     server-properties_questions
@@ -290,7 +321,6 @@ function call {
     sftp-2
     clean-up
 }
-
 call
 #todo list:
 
@@ -309,7 +339,7 @@ SHOULD
 1. Make comments!
 
 COULD
-1.
+1. 
 
 WOULD
 1. Make chosing center for versions of the server
