@@ -6,6 +6,7 @@ current version: BETA1.1
 LICENSE: MIT LICENSE.
 FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
+#load language packs, function downloadfilesfromrepo is from @chrisbrownie
 function DownloadFilesFromRepo {
 Param(
     [string]$Owner,
@@ -53,9 +54,12 @@ if ($lang -eq "en") {
     . $scriptlocation
 }
 Write-Host -Object $loading
+#load all modules
 function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser
 }
+
+#ask which server.properties function you want to call
 function server-properties_questions {
     $srvProp = Read-Host -Prompt "server.properties:simple or advanced?" # this is not translated, because of the complexibility. I want to work on this in the future.
     if ($srvProp -eq "simple") {
@@ -69,6 +73,8 @@ function server-properties_questions {
         Write-Host -Object $serverPRTskip
     }
 }
+
+#make an server.properties file, for people who know what an server.properties is and how that works.
 function server-properties_advanced {
     function ask{
         param ([string]$vraag, [string]$defVal, [string]$propVal)
@@ -146,6 +152,8 @@ function server-properties_advanced {
     Add-Content $env:TEMP\newserver\server.properties "motd=$motd"
     ask "enable rcon(def=false)" $false "enable-rcon"
 }
+
+#make an server.properties file, for people who have no idea how server.properties works.
 function server-properties_simple {
     function RET {
         param ([string]$nu, [string]$def)
@@ -223,6 +231,8 @@ function server-properties_simple {
     add -toWrite "motd=A minecraft server"
     add -toWrite "enable-rcon=true"
 }
+
+#ask if you want to make an eula.txt file
 function eula-txt_questions {
     $eulaAsk = Read-Host -Prompt $eula_txtquestion
     if ($eulaAsk -eq "y") {
@@ -234,9 +244,13 @@ function eula-txt_questions {
         break
     }
 }
+
+#make an eula.txt file, for uploading in sftp-1+ssh-1
 function eula-txt {
     Add-Content $env:TEMP\newserver\eula.txt "eula=true"
 }
+
+#ask if you want to add an start.sh file to your server
 function start-sh_questions {
     $question = Read-Host -Prompt $start_shquestion
     if ($question -eq "n") {
@@ -248,11 +262,15 @@ function start-sh_questions {
         break
     }
 }
+
+#make an start.sh file, for uploading in sftp-2
 function start-sh {
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value '#!bin/sh'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'BINDIR="$(dirname "$(readlink -fn "$0")")"'
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$bindir"'
 }
+
+#make folder and upload server.properties & eula.txt
 function sftp-1+ssh-1 {
     function comd {
         param ([int]$ID, [string]$comd)
@@ -274,6 +292,8 @@ function sftp-1+ssh-1 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
     $1 = Get-SFTPFile -SessionId 0 -RemoteFile ./start_def.sh -LocalPath $env:TEMP\newserver\ -Overwrite
 }
+
+#ask if you want to download server.jar files
 function download_questions {
     $downld = Read-Host -Prompt $downloadquestion
     if ($downld -eq "y") {
@@ -284,6 +304,8 @@ function download_questions {
         Write-Host -Object $serverjarfault
     }
 }
+
+#download the server.jar files
 function download {
     function comd {
         param ([int]$ID, [string]$comd)
@@ -310,14 +332,20 @@ function download {
         break
     }
 }
+
+#upload start.sh
 function sftp-2 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
 }
+
+#clean up, so you can't see what happened at your computer
 function clean-up {
     $1 = Remove-SFTPSession -SessionId 0
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
     $1 = Remove-SSHSession -SessionId 0
 }
+
+#call all functions one by one
 function call {
     modules
     server-properties_questions
@@ -328,8 +356,9 @@ function call {
     sftp-2
     clean-up
 }
+
+#run the whole script
 call
-#todo list:
 
 
 #requirements for out of beta:
