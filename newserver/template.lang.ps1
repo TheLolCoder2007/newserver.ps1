@@ -1,6 +1,9 @@
 ﻿Write-Host -Object "" #made by YOURNAMEHERE
 $loading = "" #loading functions & modules, wait a moment...
 $serverpropertiesquestion = ""#server.properties:simple or advanced? Or choose 'none' if you don't want an server.properties file
+$serverpropertiessimple = ""#simple
+$serverpropertiesadvanced = ""#advanced
+$serverpropertiesnone = ""#none
 $serverPRTquestion = "" #what is your server port you want to use?
 $serverPRTskip = "" #server.properties is skipped
 $serverprtfault = ""#you didn't enter simple, advanced or none!

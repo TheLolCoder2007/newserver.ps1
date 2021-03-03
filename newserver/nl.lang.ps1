@@ -1,6 +1,9 @@
 ﻿Write-Host -Object "Gemaakt door thelolcoder2007"
 $loading = "Functies en modules aan het laden, even geduld alstublieft..."
 $serverpropertiesquestion = "Server.properties:simple of advanced? Of kies 'none' als je geen server.properties bestand wil."
+$serverpropertiessimple = ""#simple
+$serverpropertiesadvanced = ""#advanced
+$serverpropertiesnone = ""#none
 $serverPRTquestion = "wat is de server port die je wil gebruiken?"
 $serverPRTskip = "server.properties is overgeslagen"
 $serverprtfault = "Je hebt niet simple, advanced of none ingevuld!"
