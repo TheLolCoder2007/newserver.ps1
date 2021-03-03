@@ -53,6 +53,8 @@ if ($lang -eq "en") {
     . $scriptlocation
 }elseif ($lang -eq "nl") {
     downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
+    . $scriptlocation
 }else{
     Write-Host -Object "not a valid value"
 }
