@@ -62,7 +62,7 @@ if ($lang -eq "en") {
 Write-Host -Object $loading
 #load all modules
 function modules {
-    $1 = install-Module -Name posh-SSH -Scope CurrentUser -force
+    $1 = install-Module -Name posh-SSH -Scope CurrentUser -Force
 }
 
 #ask which server.properties function you want to call
@@ -373,7 +373,6 @@ call
 MOSCOW list:
 
 MUST
-Make dutch language pack
 Repair forge
 
 SHOULD
