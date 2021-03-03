@@ -370,14 +370,15 @@ call
 MOSCOW list:
 
 MUST
-Make language packs
-
+Make dutch language pack
+Repair forge
 
 SHOULD
 Update jarfiles (they are outdated)
 
 COULD
 add clean server version
+add RSS feed (or something) to auto-update the server versions
 
 WOULD
 Make chosing center for versions of the server
