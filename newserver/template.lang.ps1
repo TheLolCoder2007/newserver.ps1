@@ -7,7 +7,7 @@ $serverpropertiesnone = ""#none
 $serverPRTquestion = "" #what is your server port you want to use?
 $serverPRTskip = "" #server.properties is skipped
 $serverprtfault = ""#you didn't enter simple, advanced or none!
-$fillin = ""#fill the thing in, what you want to get written to server.properties. If you don't know what those values must be, press ctrl+c.
+$fillin = ""#fill the thing in, what you want to get written to server.properties. If you don't know what those values must be, press enter.
 $sameAsServerPRT = ""#the same as server port
 $qportquestion = ""#what is your query port? (it will be the same as the server port). Fill in a number (25565 recommended)
 $gamemodequestion = ""#which gamemode do you want? (0=survivor, 1=creative, 2=adventure, 3=spectator)
@@ -21,7 +21,7 @@ $eula_txtfault = ""#not answered y/n. script will now quit.
 $start_shquestion = ""#do you have an start.sh?(y/n)
 $start_shskip = ""#start.sh is skipped
 $start_shfault = $eula_txtfault
-$compnamequestion = ""#what is your computer name/ip adress? This need to be an linux host.
+$compnamequestion = ""#What is your computer name/ip adress for the server where you want to host the server on? This need to be an linux host.
 $usernamequestion = ""#what is your username for
 $passwordTwice = ""#You need to fill in your password twice
 $serverprtexists = ""#your server port already exist. Program will now quit.
