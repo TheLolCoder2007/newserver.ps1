@@ -240,9 +240,9 @@ function server-properties_simple {
 #ask if you want to make an eula.txt file
 function eula-txt_questions {
     $eulaAsk = Read-Host -Prompt $eula_txtquestion
-    if ($eulaAsk -eq "y") {
+    if ($eulaAsk -eq $y) {
         Write-Host -Object $eulatxtskip
-    }elseif ($eulaAsk -eq "n") {
+    }elseif ($eulaAsk -eq $n) {
         eula-txt
     }else{
         Write-Host $eula_txtfault
@@ -258,9 +258,9 @@ function eula-txt {
 #ask if you want to add an start.sh file to your server
 function start-sh_questions {
     $question = Read-Host -Prompt $start_shquestion
-    if ($question -eq "n") {
+    if ($question -eq $n) {
         start-sh
-    }elseif ($question -eq "y") {
+    }elseif ($question -eq $y) {
         Write-Host -Object $start_shskip
     }else{
         Write-Host -Object $start_shfault
@@ -300,9 +300,9 @@ function sftp-1+ssh-1 {
 #ask if you want to download server.jar files
 function download_questions {
     $downld = Read-Host -Prompt $downloadquestion
-    if ($downld -eq "y") {
+    if ($downld -eq $y) {
         download
-    }elseif ($downld -eq "n") {
+    }elseif ($downld -eq $n) {
         Write-Host -Object $serverjarskipped
     }else{
         Write-Host -Object $serverjarfault
