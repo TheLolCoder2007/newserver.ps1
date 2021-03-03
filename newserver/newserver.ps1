@@ -320,7 +320,7 @@ function download {
     }
     $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
-        $1 = comd 0 "wget -q https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./$global:serverPRT/spigot-1.15.2.jar"
+        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /forge/server -DestinationPath $env:temp\newserver\server
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
     }elseif ($jarfile -eq "bukkit") {
         $1 = comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
