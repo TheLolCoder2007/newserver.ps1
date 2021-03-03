@@ -326,14 +326,8 @@ function download {
         $1 = comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
     }elseif ($jarfile -eq "forge") {
-        $1 = comd -ID 0 -comd "wget -q https://sourceforge.net/projects/lol1/files/download/latest"
-        try {
-            $1 = comd -ID 0 -comd "unzip forge-1.15.2-31.1.18.zip -d ./$global:serverPRT"
-        }catch{
-            Write-Host -Object "Unzip was not installed! install it with 'sudo apt install unzip' on your linux machine. The program will now quit"
-            break
-        }
-        $1 = comd -ID 0 -comd "rm forge-1.15.2-31.1.18.zip"
+        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1-imports -Path /forge/server -DestinationPath $env:temp\newserver\server
+        Add-Content -Path $env:temp\newserver\ -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
     }else{
         Write-Host -Object $notvalidvalue
         break
