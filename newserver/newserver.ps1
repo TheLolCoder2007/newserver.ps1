@@ -67,13 +67,13 @@ function modules {
 #ask which server.properties function you want to call
 function server-properties_questions {
     $srvProp = Read-Host -Prompt $serverpropertiesquestion 
-    if ($srvProp -eq "simple") {
+    if ($srvProp -eq $serverpropertiessimple) {
         server-properties_simple
     }
-    elseif ($srvProp -eq "advanced") {
+    elseif ($srvProp -eq $serverpropertiesadvanced) {
         server-properties_advanced
     }
-    elseif ($srvProp -eq "none") {
+    elseif ($srvProp -eq $serverpropertiesnone) {
         $global:serverPRT = Read-Host -Prompt $serverPRTquestion
         Write-Host -Object $serverPRTskip
     }else{
