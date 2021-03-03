@@ -367,8 +367,7 @@ function call {
 call
 
 <#requirements for out of beta:
-1 Have an working language system with english and dutch
-2 Repair forge server
+1 Repair forge server
 
 MOSCOW list:
 
@@ -381,9 +380,9 @@ Update jarfiles (they are outdated)
 
 COULD
 Add clean server version
-Add RSS feed (or something) to auto-update the server versions
 
 WOULD
 Make chosing center for versions of the server
+Add RSS feed (or something) to auto-update the server versions
 
 #>
