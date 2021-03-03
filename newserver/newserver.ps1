@@ -56,7 +56,8 @@ if ($lang -eq "en") {
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
-    Write-Host -Object "not a valid value"
+    Write-Host -Object "not a valid value, script will now quit."
+    break
 }
 Write-Host -Object $loading
 #load all modules
