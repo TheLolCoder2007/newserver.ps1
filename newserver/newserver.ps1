@@ -282,7 +282,7 @@ function sftp-1+ssh-1 {
         $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
     }
     $computername =  Read-Host $compnamequestion
-    $usernameTOcomp = Read-Host $usernamequestion
+    $usernameTOcomp = Read-Host "${usernamequestion} ${computername}?"
     Write-Host -Object $passwordtwice
     $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp 
     $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
