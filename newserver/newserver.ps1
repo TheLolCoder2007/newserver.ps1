@@ -367,7 +367,8 @@ function call {
 call
 
 <#requirements for out of beta:
-1 have an working language system with english and dutch
+1 Have an working language system with english and dutch
+2 Repair forge server
 
 MOSCOW list:
 
@@ -379,8 +380,8 @@ SHOULD
 Update jarfiles (they are outdated)
 
 COULD
-add clean server version
-add RSS feed (or something) to auto-update the server versions
+Add clean server version
+Add RSS feed (or something) to auto-update the server versions
 
 WOULD
 Make chosing center for versions of the server
