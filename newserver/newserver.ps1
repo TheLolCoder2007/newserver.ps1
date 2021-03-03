@@ -59,7 +59,7 @@ if ($lang -eq "en") {
 Write-Host -Object $loading
 #load all modules
 function modules {
-    $1 = install-Module -Name posh-SSH -Scope CurrentUser
+    $1 = install-Module -Name posh-SSH -Scope CurrentUser -force
 }
 
 #ask which server.properties function you want to call
