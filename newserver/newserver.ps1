@@ -377,7 +377,7 @@ SHOULD
 Update jarfiles (they are outdated)
 
 COULD
-
+add clean server version
 
 WOULD
 Make chosing center for versions of the server
