@@ -9,8 +9,9 @@ Requirements:
   * An folder in \~ \(home dir\) who doesn't exist.
   * With package \"unzip\" \(installed with \"sudo apt install unzip\"\)
 * Windows (10 recommended) and powershell 7
-## This project needs translations, when I am ready with [en.lang.ps1](/newserver/en.lang.ps1) please help me with translating this whole project. Thanks!
+## This project needs translations, please help me with translating this whole project. you can see it [here](https://Thanks!
 ### Languages:
 1. English
 2. Yours?
+### 
 ## I hope you will enjoy this project!

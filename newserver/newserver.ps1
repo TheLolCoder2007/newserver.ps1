@@ -1,7 +1,7 @@
 ﻿<#
 Script made by thelolcoder2007
 v1.0 came out on ?-?-2021
-current version: BETA1.1
+current version: BETA2.0
 LICENSE: MIT LICENSE.
 FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
@@ -48,11 +48,11 @@ Param(
 }
 $lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
 }elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository powershell -Path /newserver/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
