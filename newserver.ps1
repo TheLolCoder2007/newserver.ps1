@@ -48,11 +48,11 @@ Param(
 }
 $lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
 }elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
@@ -321,13 +321,13 @@ function download {
     }
     $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
-        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1-imports -Path /forge/server -DestinationPath $env:temp\newserver\server
+        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
     }elseif ($jarfile -eq "bukkit") {
-        $1 = comd 0 "wget -q https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar -O ./$global:serverPRT/craftbukkit-1.15.2.jar"
+        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/craftbukkit-1.16.5.jar
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
     }elseif ($jarfile -eq "forge") {
-        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1-imports -Path /forge/server -DestinationPath $env:temp\newserver\server
+        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/spigot/spigot-1.16-5.jar -DestinationPath $env:temp\newserver\server
         Add-Content -Path $env:temp\newserver\ -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
     }else{
         Write-Host -Object $notvalidvalue
