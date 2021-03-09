@@ -372,7 +372,6 @@ MUST
 Repair forge
 
 SHOULD
-Update jarfiles (they are outdated)
 
 COULD
 Add clean server version
