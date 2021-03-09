@@ -338,6 +338,7 @@ function download {
 #upload start.sh
 function sftp-2 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh
+    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:temp\newserver\*.jar
 }
 
 #clean up, so you can't see what happened at your computer
