@@ -288,7 +288,7 @@ function sftp-1+ssh-1 {
     $usernameTOcomp = Read-Host "${usernamequestion} ${computername}?"
     Write-Host -Object $passwordtwice
     New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
-    New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp
+    New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
     comd 0 "cd ~"
     $lsoutput = comd 0 "ls"
     Write-Host $lsoutput
