@@ -5,7 +5,7 @@ current version: BETA2.0
 LICENSE: MIT LICENSE.
 FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
-#load language packs, function downloadfilesfromrepo is from @chrisbrownie
+#load language packs, function DownloadFilesFromRepo is from @chrisbrownie
 function DownloadFilesFromRepo {
 Param(
     [string]$Owner,
@@ -60,7 +60,7 @@ if ($lang -eq "en") {
     break
 }
 Write-Host -Object $loading
-#load all modules
+#load module posh-SSH (needed for SFTP-1+SSH-1 and SFTP-2)
 function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser -Force
 }
