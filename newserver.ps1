@@ -367,12 +367,13 @@ MUST
 Repair forge
 
 SHOULD
+Add folder check
 
 COULD
 Add clean server version
 
 WOULD
-Make chosing center for versions of the server
+Make GUI
 Add RSS feed (or something) to auto-update the server versions
 
 #>
