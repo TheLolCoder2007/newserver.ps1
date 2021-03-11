@@ -1,7 +1,7 @@
 ﻿<#
 Script made by thelolcoder2007
-v1.0 came out on ?-?-2021
-current version: BETA2.0
+v1.0 came out on 11-3-2021
+current version: 1.0
 LICENSE: MIT LICENSE.
 FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
