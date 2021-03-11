@@ -7,12 +7,44 @@ FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
 #load language packs, function DownloadFilesFromRepo is from @chrisbrownie, forked by @zerotag
 function DownloadFilesFromRepo {
+	
+	<#
+	.SYNOPSIS
+		This function retrieves the specified repository on GitHub to a local directory with authentication.
+	.DESCRIPTION
+		This function retrieves the specified repository on GitHub to a local directory with authentication, being a single file, a complete folder, or the entire repository.
+	.PARAMETER User
+		Your GitHub username, for using the Authenticated Service. Providing 5000 requests per hour.
+		Without this you will be limited to 60 requests per hour.
+		See for more information: https://developer.github.com/v3/auth/
+	.PARAMETER Token
+		The parameter Token is the generated token for authenticated users.
+		Create one here (after logging in on your account): https://github.com/settings/tokens
+	.PARAMETER Owner
+		Owner of the repository you want to download from.
+	.PARAMETER Repository
+		The repository name you want to download from.
+	.PARAMETER Path
+		The path inside the repository you want to download from.
+		If empty, the function will iterate the whole repository.
+		Alternatively you can specify a single file.
+	.PARAMETER DestinationPath
+		The local folder you want to download the repository to.
+	.EXAMPLE
+		PS C:\> DownloadFilesFromRepo -User "MyUsername" -Token "My40CharactersLongToken" -Owner "GitHubDeveloper" -Repository "RepositoryName" -Path "InternalFolder" -DestinationPath "C:/MyDownloadedRepository"
+		
+	.NOTES
+		Author: chrisbrownie | https://gist.github.com/chrisbrownie/f20cb4508975fb7fb5da145d3d38024a
+		Modified: zeroTAG | https://gist.github.com/zerotag/78207737bafba0792c98663e81f211bf
+		Last Edit: 2019-06-15
+		Version 1.0 - initial release of DownloadFilesFromRepo
+	#>
+
 	Param(
 		[Parameter(Mandatory=$True)]
 		[string]$User,
 
 		[Parameter(Mandatory=$True)]
-        [AllowEmptyString()]
 		[string]$Token,
 
 		[Parameter(Mandatory=$True)]
@@ -30,7 +62,7 @@ function DownloadFilesFromRepo {
 	)
 
 	# Authentication
-	$authPair = "$($User)";
+	$authPair = "$($User):$($Token)";
 	$encAuth = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($authPair));
 	$headers = @{ Authorization = "Basic $encAuth" };
 	
@@ -69,14 +101,13 @@ function DownloadFilesFromRepo {
 			throw "Unable to download '$($file)'";
 		}
 	}
-}
-$lang = Read-Host -Prompt "en/nl"
+}$lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
-    downloadfilesfromrepo -user thelolcoder2007 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    downloadfilesfromrepo -user thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
 }elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -user thelolcoder2007 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    downloadfilesfromrepo -user thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
@@ -339,14 +370,17 @@ function download {
     }
     $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
-        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/spigot/spigot-1.16.5.jar -DestinationPath $env:temp\newserver\server
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/spigot/spigot-1.16.5.jar -DestinationPath $env:temp\newserver\server
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.16.5.jar"
+        $global:chosen = ""
     }elseif ($jarfile -eq "bukkit") {
-        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/craftbukkit-1.16.5.jar
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/craftbukkit-1.16.5.jar
         Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.16.5.jar"
+        $global:chosen = ""
     }elseif ($jarfile -eq "forge") {
-        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
         Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
+        $global:chosen = "f"
     }else{
         Write-Host -Object $notvalidvalue
         break
