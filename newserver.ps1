@@ -5,54 +5,78 @@ current version: BETA2.0
 LICENSE: MIT LICENSE.
 FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
-#load language packs, function DownloadFilesFromRepo is from @chrisbrownie
+#load language packs, function DownloadFilesFromRepo is from @chrisbrownie, forked by @zerotag
 function DownloadFilesFromRepo {
-Param(
-    [string]$Owner,
-    [string]$Repository,
-    [string]$Path,
-    [string]$DestinationPath
-    )
+	Param(
+		[Parameter(Mandatory=$True)]
+		[string]$User,
 
-    $baseUri = "https://api.github.com/"
-    $args = "repos/$Owner/$Repository/contents/$Path"
-    $wr = Invoke-WebRequest -Uri $($baseuri+$args)
-    $objects = $wr.Content | ConvertFrom-Json
-    $files = $objects | where {$_.type -eq "file"} | Select -exp download_url
-    $directories = $objects | where {$_.type -eq "dir"}
-    
-    $directories | ForEach-Object { 
-        DownloadFilesFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
-    }
+		[Parameter(Mandatory=$True)]
+        [AllowEmptyString()]
+		[string]$Token,
 
-    
-    if (-not (Test-Path $DestinationPath)) {
-        # Destination path does not exist, let's create it
-        try {
-            New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop
-        } catch {
-            throw "Could not create path '$DestinationPath'!"
-        }
-    }
+		[Parameter(Mandatory=$True)]
+		[string]$Owner,
 
-    foreach ($file in $files) {
-        $fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
-        try {
-            Invoke-WebRequest -Uri $file -OutFile $fileDestination -ErrorAction Stop -Verbose
-            "Grabbed '$($file)' to '$fileDestination'"
-        } catch {
-            throw "Unable to download '$($file.path)'"
-        }
-    }
+		[Parameter(Mandatory=$True)]
+		[string]$Repository,
 
+		[Parameter(Mandatory=$True)]
+		[AllowEmptyString()]
+		[string]$Path,
+
+		[Parameter(Mandatory=$True)]
+		[string]$DestinationPath
+	)
+
+	# Authentication
+	$authPair = "$($User)";
+	$encAuth = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($authPair));
+	$headers = @{ Authorization = "Basic $encAuth" };
+	
+	# REST Building
+	$baseUri = "https://api.github.com";
+	$argsUri = "repos/$Owner/$Repository/contents/$Path";
+	$wr = Invoke-WebRequest -Uri ("$baseUri/$argsUri") -Headers $headers;
+
+	# Data Handler
+	$objects = $wr.Content | ConvertFrom-Json
+	$files = $objects | where {$_.type -eq "file"} | Select -exp download_url
+	$directories = $objects | where {$_.type -eq "dir"}
+	
+	# Iterate Directory
+	$directories | ForEach-Object { 
+		DownloadFilesFromRepo -User $User -Token $Token -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath "$($DestinationPath)/$($_.name)"
+	}
+
+	# Destination Handler
+	if (-not (Test-Path $DestinationPath)) {
+		try {
+			New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop;
+		} catch {
+			throw "Could not create path '$DestinationPath'!";
+		}
+	}
+
+	# Iterate Files
+	foreach ($file in $files) {
+		$fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
+		$outputFilename = $fileDestination.Replace("%20", " ");
+		try {
+			Invoke-WebRequest -Uri "$file" -OutFile "$outputFilename" -ErrorAction Stop -Verbose
+			"Grabbed '$($file)' to '$outputFilename'";
+		} catch {
+			throw "Unable to download '$($file)'";
+		}
+	}
 }
 $lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    downloadfilesfromrepo -user thelolcoder2007 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
 }elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    downloadfilesfromrepo -user thelolcoder2007 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
