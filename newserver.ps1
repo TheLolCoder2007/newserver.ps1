@@ -321,14 +321,14 @@ function download {
     }
     $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
-        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
-        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.15.2.jar"
+        DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/spigot/spigot-1.16.5.jar -DestinationPath $env:temp\newserver\server
+        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.16.5.jar"
     }elseif ($jarfile -eq "bukkit") {
         DownloadFilesFromRepo -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/craftbukkit-1.16.5.jar
-        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.15.2.jar"
+        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.16.5.jar"
     }elseif ($jarfile -eq "forge") {
-        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/spigot/spigot-1.16-5.jar -DestinationPath $env:temp\newserver\server
-        Add-Content -Path $env:temp\newserver\ -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
+        DownloadFilesFromRepo -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
+        Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
     }else{
         Write-Host -Object $notvalidvalue
         break
