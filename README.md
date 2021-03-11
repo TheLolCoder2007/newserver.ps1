@@ -7,11 +7,11 @@ Requirements:
 * Linux server with:
   * SFTP and SSH open
   * An folder in \~ \(home dir\) who doesn't exist.
-  * With package \"unzip\" \(installed with \"sudo apt install unzip\"\)
 * Windows (10 recommended) and powershell 7
-## This project needs translations, please help me with translating this whole project. you can see it [here](https://Thanks!
+## This project needs translations, please help me with translating this whole project. you can see it [here](/assets/langs). Thanks!
 ### Languages:
 1. English
-2. Yours?
+2. Dutch
+3. Yours?
 ### 
 ## I hope you will enjoy this project!
