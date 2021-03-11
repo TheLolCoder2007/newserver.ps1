@@ -4,14 +4,17 @@
 ## Please check out my other repos [here](https://github.com/thelolcoder2007)
 ## This repo is all about creating an minecraft server via powershell
 Requirements:
-* Linux server with:
-  * SFTP and SSH open
+* Server with:
+  * Linux as OS;
+  * SFTP and SSH open;
   * An folder in \~ \(home dir\) who doesn't exist.
-* Windows (10 recommended) and powershell 7
+* Client with:
+  * Windows (10 recommended);
+  * Powershell 7 or higher
 ## This project needs translations, please help me with translating this whole project. you can see it [here](/assets/langs). Thanks!
 ### Languages:
 1. English
 2. Dutch
 3. Yours?
-### 
+## Check out the releases [here](https://github.com/TheLolCoder2007/newserver.ps1/releases)
 ## I hope you will enjoy this project!
