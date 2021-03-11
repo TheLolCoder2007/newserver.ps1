@@ -290,12 +290,6 @@ function sftp-1+ssh-1 {
     New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
     New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
     comd 0 "cd ~"
-    $lsoutput = comd 0 "ls"
-    Write-Host $lsoutput
-    if (!$lsoutput.Output -ccontains $global:serverPRT) {
-        Write-Host -Object $serverprtexists
-        break
-    }
     $1 = comd 0 "mkdir $global:serverPRT"
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
