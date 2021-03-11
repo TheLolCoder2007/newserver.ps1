@@ -427,10 +427,9 @@ call
 MOSCOW list:
 
 MUST
-Repair forge
 
 SHOULD
-Add folder check
+Add folder check at remote
 
 COULD
 Add clean server version
