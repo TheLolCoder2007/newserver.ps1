@@ -339,6 +339,7 @@ function sftp-2 {
 function clean-up {
     $1 = Remove-SFTPSession -SessionId 0
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
+    $1 = Remove-Item -Path $env:TEMP\newserver\*
     $1 = Remove-SSHSession -SessionId 0
 }
 
