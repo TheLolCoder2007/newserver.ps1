@@ -7,39 +7,6 @@ FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
 #load language packs, function DownloadFilesFromRepo is from @chrisbrownie, forked by @zerotag
 function DownloadFilesFromRepo {
-	
-	<#
-	.SYNOPSIS
-		This function retrieves the specified repository on GitHub to a local directory with authentication.
-	.DESCRIPTION
-		This function retrieves the specified repository on GitHub to a local directory with authentication, being a single file, a complete folder, or the entire repository.
-	.PARAMETER User
-		Your GitHub username, for using the Authenticated Service. Providing 5000 requests per hour.
-		Without this you will be limited to 60 requests per hour.
-		See for more information: https://developer.github.com/v3/auth/
-	.PARAMETER Token
-		The parameter Token is the generated token for authenticated users.
-		Create one here (after logging in on your account): https://github.com/settings/tokens
-	.PARAMETER Owner
-		Owner of the repository you want to download from.
-	.PARAMETER Repository
-		The repository name you want to download from.
-	.PARAMETER Path
-		The path inside the repository you want to download from.
-		If empty, the function will iterate the whole repository.
-		Alternatively you can specify a single file.
-	.PARAMETER DestinationPath
-		The local folder you want to download the repository to.
-	.EXAMPLE
-		PS C:\> DownloadFilesFromRepo -User "MyUsername" -Token "My40CharactersLongToken" -Owner "GitHubDeveloper" -Repository "RepositoryName" -Path "InternalFolder" -DestinationPath "C:/MyDownloadedRepository"
-		
-	.NOTES
-		Author: chrisbrownie | https://gist.github.com/chrisbrownie/f20cb4508975fb7fb5da145d3d38024a
-		Modified: zeroTAG | https://gist.github.com/zerotag/78207737bafba0792c98663e81f211bf
-		Last Edit: 2019-06-15
-		Version 1.0 - initial release of DownloadFilesFromRepo
-	#>
-
 	Param(
 		[Parameter(Mandatory=$True)]
 		[string]$User,
