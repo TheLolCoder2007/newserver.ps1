@@ -309,9 +309,9 @@ function sftp-1+ssh-1 {
     $computername =  Read-Host $compnamequestion
     $usernameTOcomp = Read-Host "${usernamequestion}${computername}?"
     Write-Host -Object $passwordtwice
-    New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
-    New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
-    comd 0 "cd ~"
+    $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
+    $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
+    $1 = comd 0 "cd ~"
     $1 = comd 0 "mkdir $global:serverPRT"
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
