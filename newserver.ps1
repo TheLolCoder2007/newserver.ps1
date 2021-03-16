@@ -400,13 +400,13 @@ MOSCOW list:
 MUST
 
 SHOULD
-Add folder check at remote
+Add folder check at remote PATCH
 
 COULD
-Add clean server version
+Add all versions to choose from MINOR
 
 WOULD
-Make GUI
-Add RSS feed (or something) to auto-update the server versions
+Make GUI MAJOR
+Add RSS feed (or something) to auto-update the server versions MAJOR
 
 #>
