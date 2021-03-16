@@ -28,5 +28,5 @@ $serverprtexists = "Your server port already exist. Program will now quit."
 $downloadquestion = "Do you have a server.jar?(y/n)(default=n)" 
 $serverjarskipped = "Server.jar download skipped"
 $serverjarfault = $start_shfault
-$jarfilechoose = "Spigot, bukkit or forge (bukkit recommended)"
+$jarfilechoose = "Spigot, bukkit, forge or clean? (spigot recommended)"
 $notvalidvalue = "Not valid value entered, program will now quit."

@@ -28,5 +28,5 @@ $serverprtexists = "De server port die bestaat al. Het programma zal nu sluiten.
 $downloadquestion = "Heb je al een server.jar? (j/n)(standaard=n)"
 $serverjarskipped = "De download van server.jar is overgeslagen."
 $serverjarfault = $eula_txtfault
-$jarfilechoose = "Spigot, bukkit or forge? (bukkit is aan te raden)"
+$jarfilechoose = "Spigot, bukkit, forge of basis? (spigot is aan te raden)"
 $notvalidvalue = "Geen valide antwoord gegeven, het programma zal nu sluiten."
