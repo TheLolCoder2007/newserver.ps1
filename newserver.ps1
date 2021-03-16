@@ -370,17 +370,21 @@ function download {
     }
     $jarfile = Read-Host -Prompt $jarfilechoose
     if ($jarfile -eq "spigot") {
-        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/spigot/spigot-1.16.5.jar -DestinationPath $env:temp\newserver\server
-        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot-1.16.5.jar"
-        $global:chosen = ""
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/spigot/latest/*.jar -DestinationPath $env:temp\newserver\
+        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar spigot.jar"
+        $global:chosen = "s"
     }elseif ($jarfile -eq "bukkit") {
-        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/craftbukkit-1.16.5.jar
-        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit-1.16.5.jar"
-        $global:chosen = ""
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/bukkit/latest/*.jar -DestinationPath $env:TEMP\newserver\
+        Add-Content $env:TEMP\newserver\start.sh "java -Xmx1024M -Xms1024M -jar craftbukkit.jar"
+        $global:chosen = "b"
     }elseif ($jarfile -eq "forge") {
-        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/forge/server -DestinationPath $env:temp\newserver\server
-        Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.1.16.5.jar"
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner "thelolcoder2007" -Repository newserver.ps1 -Path assets/forge/latest/server -DestinationPath $env:temp\newserver\
+        Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.jar"
         $global:chosen = "f"
+    }elseif ($jarfile -eq "clean") {
+        DownloadFilesFromRepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/clean/latest/*.jar -DestinationPath $env:temp\newserver\
+        Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar minecraft_server.jar"
+        $global:chosen = "c"
     }else{
         Write-Host -Object $notvalidvalue
         break
