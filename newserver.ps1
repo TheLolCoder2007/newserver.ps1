@@ -71,11 +71,11 @@ function DownloadFilesFromRepo {
 }
 $lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
-    downloadfilesfromrepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
+    downloadfilesfromrepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
     . $scriptlocation
 }elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
+    downloadfilesfromrepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
     $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
     . $scriptlocation
 }else{
