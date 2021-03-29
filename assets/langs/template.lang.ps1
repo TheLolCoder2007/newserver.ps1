@@ -29,4 +29,5 @@ $downloadquestion = ""#do you have a server.jar?(y/n)(default=n)
 $serverjarskipped = ""#server.jar download skipped
 $serverjarfault = $eula_txtfault
 $jarfilechoose = ""#Spigot, bukkit, forge or clean? (spigot recommended)
+$minecraftversionquestion = ""#Which minecraft version do you want? NOTE: forge versions 1.13+ are not available. I can't find the universal .jarfile. There is:  
 $notvalidvalue = ""#not valid value entered, program will now quit.

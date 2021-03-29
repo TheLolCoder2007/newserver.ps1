@@ -29,4 +29,5 @@ $downloadquestion = "Heb je al een server.jar? (j/n)(standaard=n)"
 $serverjarskipped = "De download van server.jar is overgeslagen."
 $serverjarfault = $eula_txtfault
 $jarfilechoose = "Spigot, bukkit, forge of basis? (spigot is aan te raden)"
+$minecraftversionquestion = "Welke minecraft versie wil je? NOTITIE: forge versies 1.13+ zijn niet beschikbaar. Ik kan geen universal .jarfile vinden. Er is: "
 $notvalidvalue = "Geen valide antwoord gegeven, het programma zal nu sluiten."
