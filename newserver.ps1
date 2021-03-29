@@ -68,7 +68,8 @@ function DownloadFilesFromRepo {
 			throw "Unable to download '$($file)'";
 		}
 	}
-}$lang = Read-Host -Prompt "en/nl"
+}
+$lang = Read-Host -Prompt "en/nl"
 if ($lang -eq "en") {
     downloadfilesfromrepo -User thelolcoder2007 -Token b1d5958aa0d4b49549813a242fdf0143bc85dd76 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
     $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
