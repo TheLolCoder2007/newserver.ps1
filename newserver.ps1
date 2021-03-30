@@ -359,7 +359,7 @@ function download {
 
         Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar server.jar"
     }else{
-        Write-Host -Object $notvalidvalue
+        Write-Host $notvalidvalue
         break
     }
 }
@@ -367,11 +367,7 @@ function download {
 #upload start.sh
 function sftp-2 {
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh -Overwrite
-    if ($global:chosen -eq "f") {
-        $1 = Set-SFTPFolder -SessionId 0 -LocalFolder $env:temp\newserver\* -RemotePath /$global:serverPRT/ -Overwrite
-    }else{
-        $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:temp\newserver\*.jar -Overwrite
-    }
+    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:temp\newserver\*.jar -Overwrite
 }
 
 #clean up, so you can't see what happened at your computer
@@ -380,7 +376,7 @@ function clean-up {
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
     $1 = Remove-Item -Path $env:TEMP\newserver\* -Force
     $1 = Remove-SSHSession -SessionId 0
-    clear
+    #clear
 }
 
 #call all functions one by one
