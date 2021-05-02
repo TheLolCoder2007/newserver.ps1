@@ -3,7 +3,6 @@ Script made by thelolcoder2007
 v1.0 came out on 11-3-2021
 current version: 1.0.1
 LICENSE: MIT LICENSE.
-FOR MORE INFO SEE LICENSE IN THE ROOT FROM THIS REPO
 #>
 #load language packs, function DownloadFilesFromRepo is from @chrisbrownie, forked by @zerotag
 function DownloadFilesFromRepo {
@@ -70,19 +69,13 @@ function DownloadFilesFromRepo {
 	}
 }
 $lang = Read-Host -Prompt "en/nl"
-if ($lang -eq "en") {
-    downloadfilesfromrepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/en.lang.ps1 -DestinationPath $env:Temp\newserver
-    $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
-    . $scriptlocation
-}elseif ($lang -eq "nl") {
-    downloadfilesfromrepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/nl.lang.ps1 -DestinationPath $env:temp\newserver
-    $scriptlocation = "$env:Temp\newserver\nl.lang.ps1"
-    . $scriptlocation
-}else{
-    Write-Host -Object "not a valid value, script will now quit."
-    break
-}
+$z = "z"
+$token = "ghp_13XCnKqyhlkgAphu9MAbFXur5uU5Qm1rewT+$z"
+downloadfilesfromrepo -User thelolcoder2007 -Token $token -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/${lang}.lang.ps1 -DestinationPath $env:Temp\newserver -ErrorAction Stop
+$scriptlocation = "$env:Temp\newserver\en.lang.ps1"
+. $scriptlocation
 Write-Host -Object $loading
+
 #load module posh-SSH (needed for SFTP-1+SSH-1 and SFTP-2)
 function modules {
     $1 = install-Module -Name posh-SSH -Scope CurrentUser -Force
