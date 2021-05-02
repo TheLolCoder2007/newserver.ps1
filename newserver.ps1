@@ -313,29 +313,25 @@ function download {
         $1 = Invoke-SSHCommand -SessionId $ID -Command $comd
     }
     $minecraftversions = "1.12", "1.12.1", "1.12.2", "1.13", "1.13.1","1.13.2","1.14","1.14.1","1.14.2","1.14.3","1.14.4","1.15","1.15.1","1.15.2","1.16","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5","latest"
+    $jarfiles = "bukkit","forge","clean","spigot"
     $jarfile = Read-Host -Prompt $jarfilechoose
     $version = Read-Host -Prompt "${minecraftversionquestion} ${minecraftversions}"
     if ($minecraftversions -ccontains $version) {
-        if ($jarfile -eq "spigot") {
-            DownloadFilesFromRepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/spigot/$version/server.jar" -DestinationPath $env:temp\newserver\
-            $global:chosen = "s"
-        }elseif ($jarfile -eq "bukkit") {
-            DownloadFilesFromRepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/bukkit/$version/server.jar" -DestinationPath $env:TEMP\newserver\
-            $global:chosen = "b"
-        }elseif ($jarfile -eq "forge") {
-            DownloadFilesFromRepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/forge/$version/server.jar" -DestinationPath $env:temp\newserver\
-            $global:chosen = "f"
-        }elseif ($jarfile -eq "clean") {
-            DownloadFilesFromRepo -User thelolcoder2007 -Token 334cd1c7b89a6df8749db9e863fa176aefe6b693 -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/clean/$version/server.jar" -DestinationPath $env:temp\newserver\
-            $global:chosen = "c"
+        if ($jarfiles -ccontains $jarfile) {
+            if ($jarfile -eq "forge") {
+                DownloadFilesFromRepo -User thelolcoder2007 -Token $env:token -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/forge/latest/server/" -DestinationPath $env:temp\newserver\server
+                $global:f=$true
+            }else{
+                DownloadFilesFromRepo -User thelolcoder2007 -Token $env:token -Owner thelolcoder2007 -Repository newserver.ps1 -Path "assets/${jarfile}/${version}" -DestinationPath $env:temp\newserver\
+                Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar server.jar"
+                $global:f=$false
+            }
         }else{
             Write-Host -Object $notvalidvalue
             break
         }
-
-        Add-Content -Path $env:temp\newserver\start.sh -Value "java -Xmx1024M -Xms1024M -jar server.jar"
     }else{
-        Write-Host $notvalidvalue
+        Write-Host -Object $notvalidvalue
         break
     }
 }
@@ -385,9 +381,7 @@ function call {
 #run the whole script
 call
 
-<#requirements for out of beta:
-1 Repair forge server
-
+<#
 MOSCOW list:
 
 MUST
