@@ -301,23 +301,6 @@ function start-sh {
     Add-Content C:\Users\Thomas\AppData\Local\Temp\newserver\start.sh -Value 'cd "$bindir"'
 }
 
-#make folder and upload server.properties & eula.txt
-function sftp-1+ssh-1 {
-    function comd {
-        param ([int]$ID, [string]$comd)
-        $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
-    }
-    $computername =  Read-Host $compnamequestion
-    $usernameTOcomp = Read-Host "${usernamequestion}${computername}?"
-    Write-Host -Object $passwordtwice
-    $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
-    $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
-    $1 = comd 0 "cd ~"
-    $1 = comd 0 "mkdir $global:serverPRT"
-    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
-    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
-}
-
 #ask if you want to download server.jar files
 function download_questions {
     $downld = Read-Host -Prompt $downloadquestion
@@ -364,10 +347,27 @@ function download {
     }
 }
 
-#upload start.sh
-function sftp-2 {
+#make folder and upload server.properties, eula.txt and start.sh
+function sftp+ssh {
+    function comd {
+        param ([int]$ID, [string]$comd)
+        $1 = Invoke-SSHCommand -SessionId $ID -Command $comd 
+    }
+    $computername =  Read-Host $compnamequestion
+    $usernameTOcomp = Read-Host "${usernamequestion}${computername}?"
+    Write-Host -Object $passwordtwice
+    $1 = New-SFTPSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
+    $1 = New-SSHSession -Port 22 -ComputerName $computername -Credential $usernameTOcomp -Force -AcceptKey
+    $1 = comd 0 "cd ~"
+    $1 = comd 0 "mkdir $global:serverPRT"
+    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\eula.txt -Overwrite
+    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT -LocalFile $env:TEMP\newserver\server.properties -Overwrite
     $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\start.sh -Overwrite
-    $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:temp\newserver\*.jar -Overwrite
+    if ($global:f) {
+        $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:TEMP\newserver\server\* -Overwrite
+    }else{
+        $1 = Set-SFTPFile -SessionId 0 -RemotePath ./$global:serverPRT/ -LocalFile $env:temp\newserver\server.jar -Overwrite
+    }
 }
 
 #clean up, so you can't see what happened at your computer
@@ -376,7 +376,6 @@ function clean-up {
     $1 = Remove-Item -Path $env:TEMP\newserver\*.*
     $1 = Remove-Item -Path $env:TEMP\newserver\* -Force
     $1 = Remove-SSHSession -SessionId 0
-    #clear
 }
 
 #call all functions one by one
@@ -385,9 +384,8 @@ function call {
     server-properties_questions
     eula-txt_questions
     start-sh_questions
-    sftp-1+ssh-1
     download_questions
-    sftp-2
+    sftp+ssh
     clean-up
 }
 
