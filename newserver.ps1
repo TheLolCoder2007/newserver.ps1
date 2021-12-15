@@ -4,7 +4,7 @@ v1.0 came out on 11-3-2021
 current version: 1.0.1
 LICENSE: MIT LICENSE.
 #>
-#load language packs, function DownloadFilesFromRepo is from @chrisbrownie, forked by @zerotag
+#load language packs, function DownloadFilesFromRepo is from  Github users @chrisbrownie and @zerotag
 function DownloadFilesFromRepo {
 	Param(
 		[Parameter(Mandatory=$True)]
@@ -69,8 +69,8 @@ function DownloadFilesFromRepo {
 	}
 }
 $lang = Read-Host -Prompt "en/nl"
-$z = "z"
-$token = "ghp_13XCnKqyhlkgAphu9MAbFXur5uU5Qm1rewT+$z"
+$1 = "S"
+$token = "ghp_HIHPplPEM2jWGtxGh5p2ilbgikNdwE0BCO1+$1"
 downloadfilesfromrepo -User thelolcoder2007 -Token $token -Owner thelolcoder2007 -Repository newserver.ps1 -Path assets/langs/${lang}.lang.ps1 -DestinationPath $env:Temp\newserver -ErrorAction Stop
 $scriptlocation = "$env:Temp\newserver\en.lang.ps1"
 . $scriptlocation
