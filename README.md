@@ -3,6 +3,7 @@
 ## Collaberators: [@RobbertEr](https://github.com/robberter), @thelol-DAG \(account is deleted\) and [@martensjrm](github.com/martensjrm)
 ## Please check out my other repos [here](https://github.com/thelolcoder2007)
 ## This repo is all about creating an minecraft server via powershell
+# WARNING: THIS REPO DOES NOT HAVE LOG4J PATCH YET! DO NOT USE UNLESS YOU ARE CERTAIN OF WHAT YOU DO!
 Requirements:
 * Server with:
   * Linux as OS;
